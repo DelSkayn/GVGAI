@@ -1,4 +1,4 @@
-package tracks.singlePlayer.advanced.sampleRHEA;
+package MeesDelz;
 
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
@@ -7,7 +7,10 @@ import tools.ElapsedCpuTimer;
 import tracks.singlePlayer.tools.Heuristics.StateHeuristic;
 import tracks.singlePlayer.tools.Heuristics.WinScoreHeuristic;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class Agent extends AbstractPlayer {
@@ -37,10 +40,12 @@ public class Agent extends AbstractPlayer {
 
     // Budgets
     private ElapsedCpuTimer timer;
-    private double acumTimeTakenEval = 0,avgTimeTakenEval = 0, avgTimeTaken = 0, acumTimeTaken = 0;
+    private double acumTimeTakenEval = 0, avgTimeTakenEval = 0, avgTimeTaken = 0, acumTimeTaken = 0;
     private int numEvals = 0, numIters = 0;
     private boolean keepIterating = true;
     private long remaining;
+
+    private boolean initilized = false;
 
     /**
      * Public constructor with state observation and time due.
@@ -67,7 +72,11 @@ public class Agent extends AbstractPlayer {
         keepIterating = true;
 
         // INITIALISE POPULATION
-        init_pop(stateObs);
+        if (!initilized) {
+            init_pop(stateObs);
+        } else {
+            shift_pop(stateObs);
+        }
 
         // RUN EVOLUTION
         remaining = timer.remainingTimeMillis();
@@ -82,6 +91,7 @@ public class Agent extends AbstractPlayer {
 
     /**
      * Run evolutionary process for one generation
+     *
      * @param stateObs - current game state
      */
     private void runIteration(StateObservation stateObs) {
@@ -89,15 +99,17 @@ public class Agent extends AbstractPlayer {
 
         if (REEVALUATE) {
             for (int i = 0; i < ELITISM; i++) {
-                if (remaining > 2*avgTimeTakenEval && remaining > BREAK_MS) { // if enough time to evaluate one more individual
+                if (remaining > 2 * avgTimeTakenEval && remaining > BREAK_MS) { // if enough time to evaluate one more individual
                     evaluate(population[i], heuristic, stateObs);
-                } else {keepIterating = false;}
+                } else {
+                    keepIterating = false;
+                }
             }
         }
 
         if (NUM_INDIVIDUALS > 1) {
             for (int i = ELITISM; i < NUM_INDIVIDUALS; i++) {
-                if (remaining > 2*avgTimeTakenEval && remaining > BREAK_MS) { // if enough time to evaluate one more individual
+                if (remaining > 2 * avgTimeTakenEval && remaining > BREAK_MS) { // if enough time to evaluate one more individual
                     Individual newind;
 
                     newind = crossover();
@@ -126,7 +138,7 @@ public class Agent extends AbstractPlayer {
                 return o1.compareTo(o2);
             });
 
-        } else if (NUM_INDIVIDUALS == 1){
+        } else if (NUM_INDIVIDUALS == 1) {
             Individual newind = new Individual(SIMULATION_DEPTH, N_ACTIONS, randomGenerator).mutate(MUTATION);
             evaluate(newind, heuristic, stateObs);
             if (newind.value > population[0].value)
@@ -143,9 +155,10 @@ public class Agent extends AbstractPlayer {
     /**
      * Evaluates an individual by rolling the current state with the actions in the individual
      * and returning the value of the resulting state; random action chosen for the opponent
+     *
      * @param individual - individual to be valued
-     * @param heuristic - heuristic to be used for state evaluation
-     * @param state - current state, root of rollouts
+     * @param heuristic  - heuristic to be used for state evaluation
+     * @param state      - current state, root of rollouts
      * @return - value of last state reached
      */
     private double evaluate(Individual individual, StateHeuristic heuristic, StateObservation state) {
@@ -156,14 +169,14 @@ public class Agent extends AbstractPlayer {
         int i;
         double acum = 0, avg;
         for (i = 0; i < SIMULATION_DEPTH; i++) {
-            if (! st.isGameOver()) {
+            if (!st.isGameOver()) {
                 ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
                 st.advance(action_mapping.get(individual.actions[i]));
 
                 acum += elapsedTimerIteration.elapsedMillis();
-                avg = acum / (i+1);
+                avg = acum / (i + 1);
                 remaining = timer.remainingTimeMillis();
-                if (remaining < 2*avg || remaining < BREAK_MS) break;
+                if (remaining < 2 * avg || remaining < BREAK_MS) break;
             } else {
                 break;
             }
@@ -209,9 +222,10 @@ public class Agent extends AbstractPlayer {
 
     /**
      * Insert a new individual into the population at the specified position by replacing the old one.
-     * @param newind - individual to be inserted into population
-     * @param pop - population
-     * @param idx - position where individual should be inserted
+     *
+     * @param newind   - individual to be inserted into population
+     * @param pop      - population
+     * @param idx      - position where individual should be inserted
      * @param stateObs - current game state
      */
     private void add_individual(Individual newind, Individual[] pop, int idx, StateObservation stateObs) {
@@ -219,6 +233,14 @@ public class Agent extends AbstractPlayer {
         pop[idx] = newind.copy();
     }
 
+    private void shift_pop(StateObservation stateObs) {
+        for(Individual individual: population){
+            individual.shift();
+        }
+        for(Individual individual: nextPop){
+            individual.shift();
+        }
+    }
 
     /**
      * Initialize population
@@ -267,6 +289,7 @@ public class Agent extends AbstractPlayer {
         }
 
     }
+
 
     /**
      * @param pop - last population obtained after evolution
