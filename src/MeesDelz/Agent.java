@@ -1,11 +1,9 @@
 package MeesDelz;
 
-
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
-import tracks.singlePlayer.tools.Heuristics.WinScoreHeuristic;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -47,7 +45,7 @@ public class Agent extends AbstractPlayer {
         NUM_ACTIONS = actions.length;
 
         //Create the player.
-        mctsPlayer = new SingleMCTSPlayer(new Random(), this,NUM_ACTIONS,actions,new WinScoreHeuristic(so));
+        mctsPlayer = new SingleMCTSPlayer(new Random(), this);
     }
 
 
@@ -64,8 +62,10 @@ public class Agent extends AbstractPlayer {
         mctsPlayer.init(stateObs);
 
         //Determine the action using MCTS...
-        mctsPlayer.run(elapsedTimer);
-        return mctsPlayer.genMove();
+        int action = mctsPlayer.run(elapsedTimer);
+
+        //... and return it.
+        return actions[action];
     }
 
 }

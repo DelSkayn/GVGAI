@@ -1,11 +1,14 @@
 package MeesDelz;
 
 public class ParameterSet {
-    public double CI;
-    public double MAX_ROLLOUT_DEPTH;
+    public double K;
+    public double eMaxGreedyEpsilon;
 
-    ParameterSet(){
-        this.CI = Math.sqrt(2.0);
-        this.MAX_ROLLOUT_DEPTH = 10;
+    ParameterSet(double K, double eMaxGreedyEpsilon) {
+        this.K =K;
+        this.eMaxGreedyEpsilon = eMaxGreedyEpsilon;
     }
+
+    public double reward;
 }
+
