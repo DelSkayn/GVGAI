@@ -64,7 +64,7 @@ public class SingleMCTSPlayer {
      * @param randomGenerator sampleRandom generator object.
      */
     public SingleMCTSPlayer(Random randomGenerator, Agent agent) {
-        this.paramOpt = new ParameterOptimizer();
+        this.paramOpt = new MABParameterOptimizer();
         SingleMCTSPlayer.randomGenerator = randomGenerator;
         this.MCTSRolloutDepth = 5;
         this.agent = agent;
@@ -131,17 +131,17 @@ public class SingleMCTSPlayer {
         int numIters = 0;
         StateObservation tempState;
 
-        int remainingLimit = 5;
+        int remainingLimit = 7;
+        ParameterSet param = this.paramOpt.choose(randomGenerator);
         while (remaining > 2 * avgTimeTaken && remaining > remainingLimit) {
-            ParameterSet param = this.paramOpt.chooseParameter(randomGenerator);
             tempState = rootObservation.copy();
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
 
             // treepolicy: navigate from the root node until either we add a new node or we reach a final state
             SingleTreeNode selected = treePolicy(tempState,param);
 
-            double delta = value(tempState, selected.getNodeDepth());
-//            double delta = rollOut(tempState);
+//            double delta = value(tempState, selected.getNodeDepth());
+            double delta = rollOut(tempState,param,selected.getNodeDepth());
 
             // backing up the run in the tree
             selected.backUp(selected, delta);   //TODO : I should probably make the backup method cleaner
@@ -152,6 +152,8 @@ public class SingleMCTSPlayer {
 
             avgTimeTaken = acumTimeTaken / numIters;
             remaining = elapsedTimer.remainingTimeMillis();
+            param = this.paramOpt.choose(randomGenerator);
+            remainingLimit = param.getRemainingLimit();
         }
     }
 
@@ -263,16 +265,16 @@ public class SingleMCTSPlayer {
      * @param _currentObservation   the initial state observation
      * @return  the final value after playing the random moves
      */
-    public double rollOut(StateObservation _currentObservation)
+    public double rollOut(StateObservation _currentObservation,ParameterSet param,int depth)
     {
         int rolloutDepth = 0;
-        while (!finishRollout(_currentObservation,rolloutDepth)) {
+        while (!finishRollout(_currentObservation,rolloutDepth,param)) {
             int action = randomGenerator.nextInt(agent.NUM_ACTIONS);
             _currentObservation.advance(agent.actions[action]);
             rolloutDepth++;
         }
 
-        return value(_currentObservation, rolloutDepth);
+        return value(_currentObservation, rolloutDepth + depth);
     }
 
     /**
@@ -281,9 +283,9 @@ public class SingleMCTSPlayer {
      * @param depth     the current depth of the rollout
      * @return  the value in the last reached state
      */
-    private boolean finishRollout(StateObservation rollerState, int depth)
+    private boolean finishRollout(StateObservation rollerState, int depth,ParameterSet param)
     {
-        if(depth >= MCTSRolloutDepth )      //rollout end condition.
+        if(depth >= param.getRollouts())      //rollout end condition.
             return true;
         return rollerState.isGameOver();
     }

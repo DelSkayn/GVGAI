@@ -36,7 +36,7 @@ public class Test {
 		int seed = new Random().nextInt();
 
 		// Game and level to play
-		int gameIdx = 2;
+		int gameIdx = 0;
 		int levelIdx = 0; // level names from 0 to 4 (game_lvlN.txt).
 		String gameName = games[gameIdx][1];
 		String game = games[gameIdx][0];
@@ -51,7 +51,7 @@ public class Test {
 		//ArcadeMachine.playOneGame(game, level1, recordActionsFile, seed);
 
 		// 2. This plays a game in a level by the controller.
-		ArcadeMachine.runOneGame(game, level1, visuals, MyController, recordActionsFile, seed, 0);
+		//ArcadeMachine.runOneGame(game, level1, visuals, MyController, recordActionsFile, seed, 0);
 
 
 		// 3. This replays a game from an action file previously recorded
@@ -69,21 +69,22 @@ public class Test {
 //		}
 
 		//5. This plays N games, in the first L levels, M times each. Actions to file optional (set saveActions to true).
-		//int N = games.length, L = 2, M = 1;
-		//boolean saveActions = false;
-		//String[] levels = new String[L];
-		//String[] actionFiles = new String[L*M];
-		//for(int i = 0; i < N; ++i)
-		//{
-			//int actionIdx = 0;
-			//game = games[i][0];
-			//gameName = games[i][1];
-			//for(int j = 0; j < L; ++j){
-				//levels[j] = game.replace(gameName, gameName + "_lvl" + j);
-				//if(saveActions) for(int k = 0; k < M; ++k)
-				//actionFiles[actionIdx++] = "actions_game_" + i + "_level_" + j + "_" + k + ".txt";
-			//}
-			//ArcadeMachine.runGames(game, levels, M, MyController, saveActions? actionFiles:null);
-		//}
+		int L = 5, M = 1;
+		int [] gameNumbersClass2 = {32,55,121,87,119,8,36,61,50,66};
+		boolean saveActions = false;
+		String[] levels = new String[L];
+		String[] actionFiles = new String[L*M];
+		for(int i : gameNumbersClass2)
+		{
+			int actionIdx = 0;
+			game = games[i][0];
+			gameName = games[i][1];
+			for(int j = 0; j < L; ++j){
+				levels[j] = game.replace(gameName, gameName + "_lvl" + j);
+				if(saveActions) for(int k = 0; k < M; ++k)
+				actionFiles[actionIdx++] = "actions_game_" + i + "_level_" + j + "_" + k + ".txt";
+			}
+			ArcadeMachine.runGames(game, levels, M, MyController, saveActions? actionFiles:null);
+		}
     }
 }

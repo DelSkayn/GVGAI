@@ -9,10 +9,6 @@ package MeesDelz;
 public class SingleTreeNode {
 
     /**
-     * Constant used in exploration part of UCB formulas
-     */
-    public final double K = Math.sqrt(2.);
-    /**
      * A negative constant used to approximate minus infinity
      */
     private final double HUGE_NEGATIVE = -10000000.0;
@@ -20,10 +16,6 @@ public class SingleTreeNode {
      * A constant used for the epsilon-greedy exploration/exploitation policy
      */
     private final double egreedyEpsilon = 0.05;
-    /**
-     * A constant used to add some exploration in the expectimax exploration/exploitation policy
-     */
-    private final double eMaxGreedyEpsilon = 0.05;
     /**
      * The parent node (is null for the root node of a tree)
      */
@@ -266,7 +258,7 @@ public class SingleTreeNode {
      * @return  the weighted expectimax with location bias
      */
     private double getAdjustedEmaxScore(ParameterSet param) {
-        return (adjEmax + param.K * Math.sqrt(Math.log(parent.nVisits + 1) / (nVisits + epsilon)) - tabooBias);
+        return (adjEmax + param.getK() * Math.sqrt(Math.log(parent.nVisits + 1) / (nVisits + epsilon)) - tabooBias);
     }
 
     /**
@@ -321,7 +313,7 @@ public class SingleTreeNode {
         double bestValue = -Double.MAX_VALUE;
         int selectedIdx;
 
-        if (SingleMCTSPlayer.randomGenerator.nextDouble() < param.eMaxGreedyEpsilon) {
+        if (SingleMCTSPlayer.randomGenerator.nextDouble() < param.getEMaxGreedyEpsilon()) {
             //Choose randomly
             selectedIdx = SingleMCTSPlayer.randomGenerator.nextInt(children.length);
             selected = this.children[selectedIdx];

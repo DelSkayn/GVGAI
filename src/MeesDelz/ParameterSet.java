@@ -1,14 +1,14 @@
 package MeesDelz;
 
-public class ParameterSet {
-    public double K;
-    public double eMaxGreedyEpsilon;
+public interface ParameterSet {
+    double getK();
 
-    ParameterSet(double K, double eMaxGreedyEpsilon) {
-        this.K =K;
-        this.eMaxGreedyEpsilon = eMaxGreedyEpsilon;
+    double getEMaxGreedyEpsilon();
+
+    int getRollouts();
+
+    default int getRemainingLimit(){
+        return this.getRollouts() > 0 ? 7 : 5;
     }
-
-    public double reward;
 }
 

@@ -1,0 +1,63 @@
+/usr/lib/jvm/java-11-openjdk/bin/java -javaagent:/usr/share/idea/lib/idea_rt.jar=36059:/usr/share/idea/bin -Dfile.encoding=UTF-8 -classpath /home/mees/Documents/uni/gaia/GVGAI/out/production/gvgai tracks.singlePlayer.Test
+Result (1->win; 0->lose): Player0:1, Player0-Score:31.0, timesteps:914
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:11.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Results in game examples/gridphysics/doorkoban.txt, 0.2 , 8.4
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1001
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Results in game examples/gridphysics/islands.txt, 0.0 , 0.0
+Result (1->win; 0->lose): Player0:1, Player0-Score:5.0, timesteps:1920
+Result (1->win; 0->lose): Player0:0, Player0-Score:4.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:1.0, timesteps:364
+Result (1->win; 0->lose): Player0:0, Player0-Score:3.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:171
+Results in game examples/contphysics/racing.txt, 0.2 , 2.6
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:1.0, timesteps:2000
+Result (1->win; 0->lose): Player0:1, Player0-Score:3.0, timesteps:193
+Result (1->win; 0->lose): Player0:0, Player0-Score:1.0, timesteps:2000
+Result (1->win; 0->lose): Player0:1, Player0-Score:2.0, timesteps:7
+Results in game examples/gridphysics/sokoban.txt, 0.4 , 1.4
+Result (1->win; 0->lose): Player0:1, Player0-Score:1.0, timesteps:119
+Result (1->win; 0->lose): Player0:1, Player0-Score:1.0, timesteps:113
+Result (1->win; 0->lose): Player0:1, Player0-Score:1.0, timesteps:271
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:70
+Result (1->win; 0->lose): Player0:1, Player0-Score:1.0, timesteps:93
+Results in game examples/contphysics/pong.txt, 0.8 , 0.8
+Result (1->win; 0->lose): Player0:0, Player0-Score:3.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:23.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:4.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:1000
+Results in game examples/gridphysics/bomber.txt, 0.0 , 6.0
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:4.0, timesteps:1103
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:2.0, timesteps:2000
+Results in game examples/gridphysics/enemycitadel.txt, 0.0 , 1.2
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Results in game examples/gridphysics/lasers2.txt, 0.0 , 0.0
+Result (1->win; 0->lose): Player0:1, Player0-Score:100.0, timesteps:122
+Result (1->win; 0->lose): Player0:1, Player0-Score:100.0, timesteps:41
+Result (1->win; 0->lose): Player0:1, Player0-Score:140.0, timesteps:1154
+Result (1->win; 0->lose): Player0:1, Player0-Score:100.0, timesteps:938
+Result (1->win; 0->lose): Player0:1, Player0-Score:100.0, timesteps:64
+Results in game examples/gridphysics/hungrybirds.txt, 1.0 , 108.0
+Result (1->win; 0->lose): Player0:1, Player0-Score:1.0, timesteps:7
+Result (1->win; 0->lose): Player0:1, Player0-Score:1.0, timesteps:72
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Result (1->win; 0->lose): Player0:0, Player0-Score:0.0, timesteps:2000
+Results in game examples/gridphysics/modality.txt, 0.4 , 0.4
+
+Process finished with exit code 0
